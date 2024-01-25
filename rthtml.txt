@@ -1,0 +1,4577 @@
+https://omayo.blogspot.com/
+
+
+
+
+
+Drive Link:
+https://drive.google.com/drive/folders/1hwLWBBMO55F6KUoSwIzkgdkHwVOpNpAK
+
+Q. Implement Web Drivers on Chrome/Firefox Browser.
+
+pom.xml
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+
+https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+ <modelVersion>4.0.0</modelVersion>
+
+ <groupId>selenium_project</groupId>
+
+ <artifactId>december_8_B1</artifactId>
+
+ <version>0.0.1-SNAPSHOT</version>
+
+<dependencies>
+
+<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+
+<dependency>
+
+ <groupId>org.seleniumhq.selenium</groupId>
+
+ <artifactId>selenium-java</artifactId>
+
+ <version>3.141.59</version>
+
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+
+<dependency>
+
+ <groupId>io.github.bonigarcia</groupId>
+
+ <artifactId>webdrivermanager</artifactId>
+
+ <version>5.6.2</version>
+
+</dependency>
+
+</dependencies>
+
+</project>
+
+LaunchingBrowser.java
+
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class LaunchingBrowser {
+
+public static void main(String[] args)
+
+{
+
+WebDriver driver;
+
+WebDriverManager.firefoxdriver().setup();
+
+driver = new FirefoxDriver();
+
+driver.get("http://www.met.edu/");
+
+WebDriverManager.chromedriver().setup();
+
+driver = new ChromeDriver();
+
+driver.get("https://www.accenture.com/in-en");
+
+}
+
+}
+
+Q. Implement the Program launching the browser by Web Driver Manager.
+
+BaseTest.java
+
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class BaseTest {
+
+public static WebDriver driver;
+
+public static void launch(String browser) {
+
+if(browser.equals("chrome")) {
+
+WebDriverManager.chromedriver().setup();
+
+driver = new ChromeDriver();
+
+}
+
+else if (browser.equals("firefox")) {
+
+WebDriverManager.firefoxdriver().setup();
+
+driver = new FirefoxDriver();
+
+}
+
+}
+
+public static void navigateUrl(String url) {
+
+driver.get(url);
+
+}
+
+}
+
+TC_001.java
+
+package selenium;
+
+public class TC_001 extends BaseTest{
+
+public static void main(String[] args) {
+
+launch("firefox");
+
+navigateUrl("https://www.javatpoint.com");
+
+}
+
+}
+
+TC_002.java
+
+package selenium;
+
+public class TC_002 extends BaseTest{
+
+public static void main(String[] args) {
+
+launch("chrome");
+
+navigateUrl("https://www.geeksforgeeks.org");
+
+}
+
+}
+
+Q. Implement the Program launching the browser by using setProperty( ) method.
+
+SetProperty.java
+
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class SetProperty {
+
+public static void main(String[] args)
+
+{
+
+System.setProperty("webdriver.gecko.driver", "C:\\Selenium\\geckodriver.exe");
+
+WebDriver wd = new FirefoxDriver();
+
+wd.get("http://google.com");
+
+}
+
+}
+
+Q. Implement the different types of WebDriver Methods using selenium webdriver.
+
+WebDriverMethod.java
+
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class WebDriverMethod {
+
+public static WebDriver driver;
+
+public static void launch(String browser)
+
+{
+
+if(browser.equals("chrome"))
+
+{
+
+WebDriverManager.chromedriver().setup();
+
+driver = new ChromeDriver();
+
+}
+
+else if(browser.equals("firefox"))
+
+{
+
+WebDriverManager.firefoxdriver().setup();
+
+driver = new FirefoxDriver();
+
+}
+
+}
+
+public static void navigateUrl(String url)
+
+{
+
+driver.get(url);
+
+}
+
+}
+
+WM_001.java
+
+package selenium;
+
+public class WM_001 extends WebDriverMethod {
+
+public static void main(String[] args) throws Exception
+
+{
+
+launch("firefox");
+
+navigateUrl("https://www.met.edu");
+
+driver.manage().window().maximize();
+
+String title = driver.getTitle();
+
+System.out.println(title);
+
+String url = driver.getCurrentUrl();
+
+System.out.println(url);
+
+driver.manage().deleteAllCookies();
+
+driver.navigate().back();
+
+Thread.sleep(3000);
+
+driver.navigate().forward();
+
+Thread.sleep(3000);
+
+driver.navigate().refresh();
+
+driver.close();
+
+driver.quit();
+
+}
+
+}
+
+WM_002.java
+
+package selenium;
+
+public class WM_002 extends WebDriverMethod{public static void main(String[] args)
+
+{
+
+launch("chrome");
+
+navigateUrl("http://www.google.com");
+
+}
+
+}
+
+Q. Implement the Browser Command and Navigate command.
+
+BaseTest.java
+
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class BaseTest {
+
+public static WebDriver driver;
+
+public static void launch(String browser)
+
+{
+
+if(browser.equals("chrome"))
+
+{
+
+WebDriverManager.chromedriver().setup();
+
+driver = new ChromeDriver();
+
+}
+
+else if(browser.equals("firefox"))
+
+{
+
+WebDriverManager.firefoxdriver().setup();
+
+driver = new FirefoxDriver();
+
+}
+
+}
+
+public static void navigateUrl(String url)
+
+{
+
+driver.get(url);
+
+}
+
+}
+
+TC_001.java
+
+package selenium;
+
+public class TC_001 extends BaseTest {
+
+public static void main(String[] args)
+
+{
+
+launch("firefox");
+
+navigateUrl("https://github.com/");
+
+}
+
+}
+
+TC_002.java
+
+package selenium;
+
+public class TC_002 extends BaseTest {
+
+public static void main(String[] args)
+
+{
+
+launch("chrome");
+
+navigateUrl("https://www.geeksforgeeks.org/");
+
+}
+
+}
+
+Q. Demonstrate the Cross Browser demonstration using Selenium webdriver.
+
+CrossBrowserDemo.java
+
+package selenium;
+
+import java.util.Scanner;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class CrossBrowserDemo {
+
+static WebDriver wd;
+
+public static void main(String[] args) throws Exception
+
+{
+
+Scanner sc = new Scanner(System.in);
+
+System.out.println("Select your browser: \n1: Chrome \n2: Firefox");
+
+System.out.println("Enter Choice: ");
+
+int ch = sc.nextInt();
+
+switch(ch){
+
+case 1:
+
+System.setProperty("webdriver.chrome.driver",
+
+"C:\\Selenium\\chromedriver.exe");
+
+wd = new ChromeDriver();
+
+break;
+
+case 2:
+
+System.setProperty("webdriver.gecko.driver",
+
+"C:\\Selenium\\geckodriver.exe");
+
+wd = new FirefoxDriver();
+
+break;
+
+default:
+
+System.out.print("Invalid Input.");
+
+}
+
+if(wd != null){
+
+wd.get("https://www.python.org/");
+
+}
+
+}
+
+}
+
+Q. Implement the different types of WebDriver Methods using selenium webdriver
+
+WebDriverMethod.java
+
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class WebDriverMethod {
+
+public static WebDriver driver;
+
+public static void launch(String browser)
+
+{
+
+if(browser.equals("chrome"))
+
+{
+
+WebDriverManager.chromedriver().setup();
+
+driver = new ChromeDriver();
+
+}
+
+else if(browser.equals("firefox"))
+
+{
+
+WebDriverManager.firefoxdriver().setup();
+
+driver = new FirefoxDriver();
+
+}
+
+}
+
+public static void navigateUrl(String url)
+
+{
+
+driver.get(url);
+
+}
+
+}
+
+WM_001.java
+
+package selenium;
+
+public class WM_001 extends WebDriverMethod {
+
+public static void main(String[] args) throws Exception
+
+{
+
+launch("firefox");
+
+navigateUrl("https://www.met.edu");
+
+driver.manage().window().maximize();
+
+String title = driver.getTitle();
+
+System.out.println(title);
+
+String url = driver.getCurrentUrl();
+
+System.out.println(url);
+
+driver.manage().deleteAllCookies();
+
+driver.navigate().back();
+
+Thread.sleep(3000);
+
+driver.navigate().forward();
+
+Thread.sleep(3000);
+
+driver.navigate().refresh();
+
+driver.close();
+
+driver.quit();
+
+}
+
+}
+
+WM_002.java
+
+package selenium;
+
+public class WM_002 extends WebDriverMethod{
+
+public static void main(String[] args)
+
+{
+
+launch("chrome");
+
+navigateUrl("http://www.google.com");
+
+}
+
+}
+
+Q. Implement the findElement command using selenium
+
+webdriver.
+
+Locator_1.java
+
+package selenium;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Locator_1 {
+
+public static void main(String[] args)
+
+{
+
+WebDriverManager.firefoxdriver().setup();
+
+FirefoxDriver driver = new FirefoxDriver();
+
+driver.get("http://www.javatpoint.com");
+
+driver.findElement(By.id("gsc-i-id1")).sendKeys("JavaTpoint");
+
+driver.findElement(By.id("idOfButton")).click();
+
+}
+
+}
+
+Q. Demonstrate the CSS Selector Locator using selenium webdriver.
+
+CssSelectorDemo.java
+
+package selenium;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class CssSelectorDemo {
+
+public static void main(String[] args) throws Exception
+
+{
+
+WebDriver driver;
+
+WebDriverManager.firefoxdriver().setup();
+
+driver = new FirefoxDriver();
+
+driver.get("http://opensourcedemo.orangehrmlive.com/web/index.php/auth/login");
+
+driver.manage().window().maximize();
+
+Thread.sleep(4000);
+
+driver.findElement(By.cssSelector("input[name=username]")).sendKeys("Admin");
+
+Thread.sleep(1000);
+
+driver.findElement(By.cssSelector("input[name=password]")).sendKeys("admin123");
+
+Thread.sleep(1000);
+
+driver.findElement(By.cssSelector("button.oxd-button.oxd-button--
+
+medium.oxd-button--main.orangehrm-login-button")).click();
+
+Thread.sleep(3000);
+
+driver.quit();
+
+}
+
+}
+
+Q. Demonstrate the Multiple window Handling using Selenium
+
+webdriver.
+
+DemoMultiWindow.java
+
+package selenium;
+
+import java.util.Set;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import org.openqa.selenium.support.ui.Select;
+
+public class DemoMultiWindow {
+
+public static void main(String args[]) {
+
+System.setProperty("webdriver.gecko.driver", "C:\\Selenium\\geckodriver.exe");
+
+WebDriver driver = new FirefoxDriver();
+
+driver.get("https://demo.frontaccounting.eu/");
+
+driver.findElement(By.name("user_name_entry_field")).sendKeys("demouser");
+
+Select s = new Select(driver.findElement(By.name("company_login_name")));
+
+s.selectByVisibleText("Training Co.");
+
+driver.findElement(By.name("SubmitUser")).click();
+
+driver.findElement(By.xpath("/html/body/table[1]/tbody/tr/td/table[1]/tbody/tr/td/div[2]/table
+
+/tbody/tr[1]/td/table/tbody/tr[2]/td[1]/a[1]")).click();
+
+String pId = driver.getWindowHandle();
+
+System.out.println("Parent Window-------> " + pId);
+
+Set<String> allwin = driver.getWindowHandles();
+
+for(String w : allwin) {
+
+driver.switchTo().window(w);
+
+System.out.println(driver.getTitle());
+
+driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+if(!w.equals(pId)) {
+
+Select ss = new Select(driver.findElement(By.id("customer_id")));
+
+ss.selectByValue("61");
+
+driver.manage().window().maximize();
+
+}
+
+driver.findElement(By.xpath("/html/body/table[1]/tbody/tr/td/table[1]/tbody/tr/td/div[2]/cent
+
+er/center/table/tbody/tr/td/a")).click();
+
+}
+
+driver.switchTo().window(pId);
+
+driver.findElement(By.linkText("Logout")).click();
+
+driver.close();
+
+} }
+
+Q. Implement the different types of Locators (id, name, class, partial link text, link text etc) using Selenium webdriver.
+
+Selenium_Locators.java
+
+package selenium;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class Selenium_Locators {
+
+public static void main(String[] args) throws Exception
+
+{
+
+System.setProperty("webdriver.gecko.driver", "C:\\Selenium\\geckodriver.exe");
+
+WebDriver wd = new FirefoxDriver();
+
+Thread.sleep(5000);
+
+wd.get("https://opensource-demo.orangehrmlive.com/");
+
+Thread.sleep(3000);
+
+wd.findElement(By.name("username")).sendKeys("Admin");
+
+Thread.sleep(1000);
+
+wd.findElement(By.name("password")).sendKeys("admin123");
+
+Thread.sleep(1000);
+
+wd.findElement(By.cssSelector("button[type=submit]")).click();
+
+Thread.sleep(1000);
+
+wd.findElement(By.className("oxd-userdropdown-name")).click();
+
+Thread.sleep(1000);
+
+wd.findElement(By.linkText("Logout")).click();
+
+wd.quit();
+
+}
+
+}
+
+Q. Implement the Partial link text Locator using selenium webdriver.
+
+PartialLinkText_Locator.java
+
+package selenium;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class PartialLinktext_Locator {
+
+public static void main(String[] args) throws Exception
+
+{
+
+WebDriver driver;
+
+System.setProperty("webdriver.chrome.driver",
+
+"C:\\Selenium\\chromedriver.exe");
+
+driver = new ChromeDriver();
+
+driver.manage().window().maximize();
+
+driver.get("https://softwaretestingo.blogspot.com/2020/08/tag-locator-practiceexample-1.html");
+
+Thread.sleep(10000);
+
+driver.findElement(By.partialLinkText("Selenium")).click();
+
+Thread.sleep(5000);
+
+driver.close();
+
+}
+
+}
+
+Q. Implement the Multiselect elements on the web page.
+
+ExplicitWaitDemo.java
+
+package selenium;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import org.openqa.selenium.support.ui.Select;
+
+public class MultiSelectDemo {
+
+public static void main(String[] args) throws Exception{
+
+System.setProperty("webdriver.chrome.driver",
+
+"C:\\Selenium\\chromedriver.exe");
+
+WebDriver wd = new FirefoxDriver();
+
+wd.get("C:\\Selenium\\Sampleform.html");
+
+wd.manage().window().maximize();
+
+//To implement radio button selection for web language
+
+WebElement radio1 = wd.findElement(By.id("html"));
+
+radio1.click();
+
+if(radio1.isSelected()) {
+
+System.out.println("Language Selected: HTML");
+
+}
+
+WebElement radio2 = wd.findElement(By.cssSelector("input[name1=age1]"));
+
+radio2.click();
+
+if(radio2.isSelected()) {
+
+System.out.println("Age Selected:0-30");
+
+}
+
+WebElement check1_1 = wd.findElement(By.cssSelector("input[name=lab1]"));
+
+check1_1.click();
+
+if(check1_1.isSelected()) {
+
+System.out.println("Selected: Database Lab");
+
+}
+
+WebElement check1_2 = wd.findElement(By.cssSelector("input[name=lab2]"));
+
+check1_2.click();
+
+if(check1_2.isSelected()) {
+
+System.out.println("Selected: Programming Lab");
+
+}
+
+Select s = new Select(wd.findElement(By.id("select_languages")));
+
+if(s.isMultiple()) {
+
+s.selectByIndex(1);
+
+s.selectByValue("Java");
+
+s.selectByValue("C#");
+
+}
+
+System.out.println("Selected languages");
+
+}
+
+}
+
+Q. Implements Explicit wait with the help of Selenium webdriver.
+
+ExplicitWaitDemo.java
+
+package selenium;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class ExplicitDemo {
+
+public static void main(String[] args) throws Exception {
+
+ System.setProperty("webdriver.chrome.driver",
+
+"C:\\Selenium\\chromedriver.exe");
+
+ WebDriver wd = new FirefoxDriver();
+
+ WebDriverWait wt = new WebDriverWait(wd,10);
+
+ wd.get("http://opensource-demo.orangehrmlive.com/");
+
+ wd.manage().window().maximize();
+
+ Thread.sleep(3000);
+
+ wd.findElement(By.cssSelector("input[name=username]")).sendKeys("Admin");
+
+ System.out.println("Admin user = Explicit Wait");
+
+wd.findElement(By.cssSelector("input[name=password]")).sendKeys("admin123");
+
+ wd.findElement(By.cssSelector("button.oxd-button--medium.oxd-button--
+
+main.orangehrm-login-button")).click();
+
+ wd.quit();
+
+}
+
+}
+
+Q. Implements Implicit wait with the help of Selenium webdriver.
+
+ImplicitWaitDemo.java
+
+package selenium;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class ImplicitWaitDemo {
+
+public static void main(String[] args) throws Exception {
+
+ System.setProperty("webdriver.chrome.driver",
+
+"C:\\Selenium\\chromedriver.exe");
+
+ WebDriver wd = new FirefoxDriver();
+
+ wd.get("http://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+
+ wd.manage().window().maximize();
+
+ wd.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+
+ wd.findElement(By.cssSelector("input[name=username]")).sendKeys("Admin");
+
+wd.findElement(By.cssSelector("input[name=password]")).sendKeys("admin123");
+
+ wd.findElement(By.cssSelector("button.oxd-button--medium.oxd-button--
+
+main.orangehrm-login-button")).click();
+
+ System.out.println("Done");
+
+ wd.quit();
+
+}
+
+}
+
+Q. Demonstrate the Validation testing with the help of Alert and Button clicking using selenium webdriver.
+
+ValidationTest.java
+
+package selenium;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.Alert;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class ValidationTest {
+
+public static void main(String[] args) throws Exception
+
+{
+
+System.setProperty("webdriver.gecko.driver", "C:\\Selenium\\geckodriver.exe");
+
+WebDriver wd = new FirefoxDriver();
+
+wd.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+wd.get("https://demo.frontaccounting.eu/");
+
+wd.findElement(By.cssSelector("input[type=submit]")).click();
+
+wd.findElement(By.linkText("Direct Delivery")).click();
+
+Thread.sleep(1000);
+
+wd.findElement(By.id("CancelOrder")).click();
+
+Alert alt = wd.switchTo().alert();
+
+System.out.print("Alert Text ==> " + alt.getText());
+
+alt.accept();
+
+}
+
+}
+
+Q. Implement Action Demo on https://opensourcedemo.orangehrmlive.com/ using Selenium webdriver.
+
+ActionDemo.java
+
+package selenium;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import org.openqa.selenium.interactions.Actions;
+
+public class ActionDemo {
+
+public static void main(String[] args) throws Exception
+
+{
+
+System.setProperty("webdriver.gecko.driver", "C:\\Selenium\\geckodriver.exe");
+
+WebDriver wd = new FirefoxDriver();
+
+wd.get("http://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+
+wd.manage().window().maximize();
+
+Thread.sleep(1000);
+
+wd.findElement(By.name("username")).sendKeys("Admin");
+
+Thread.sleep(1000);
+
+wd.findElement(By.name("password")).sendKeys("admin123");
+
+Thread.sleep(1000);
+
+wd.findElement(By.xpath("/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/form/div[3]/butto
+
+n")).click();
+
+Thread.sleep(1000);
+
+Actions act = new Actions(wd);
+
+List<WebElement> menu = wd.findElements(By.className("oxd-main-menu"));
+
+for(int i = 0; i <= menu.size()-1; i++)
+
+{
+
+System.out.println(menu.get(i).getText()); //print text of all the element
+
+act.moveToElement(menu.get(i)).perform(); //to perform mousehover on
+
+all element
+
+}
+
+wd.findElement(By.xpath("/html/body/div/div[1]/div[1]/header/div[1]/div[2]/ul/li/span/img"))
+
+.click();
+
+Thread.sleep(10000);
+
+wd.findElement(By.linkText("Logout")).click();
+
+}
+
+}
+
+Q. Demonstrate using TestNG framework different annotations (before method, after method, before class, after class, before test, after test, before suite and after suite) using Selenium webdriver.
+
+TNG_001.java
+
+package testing;
+
+import org.testng.annotations.Test;
+
+import org.testng.annotations.BeforeMethod;
+
+import org.testng.annotations.AfterMethod;
+
+import org.testng.annotations.BeforeClass;
+
+import org.testng.annotations.AfterClass;
+
+import org.testng.annotations.BeforeTest;
+
+import org.testng.annotations.AfterTest;
+
+import org.testng.annotations.BeforeSuite;
+
+import org.testng.annotations.AfterSuite;
+
+public class TNG_001 {
+
+ @Test
+
+ public void f() {
+
+ System.out.println("f");
+
+ }
+
+ @BeforeMethod
+
+ public void beforeMethod() {
+
+ System.out.println("beforeMethod");
+
+ }
+
+ @AfterMethod
+
+ public void afterMethod() {
+
+ System.out.println("afterMethod");
+
+ }
+
+ @BeforeClass
+
+ public void beforeClass() {
+
+ System.out.println("beforeClass");
+
+ }
+
+ @AfterClass
+
+ public void afterClass() {
+
+ System.out.println("afterClass");
+
+ }
+
+ @BeforeTest
+
+ public void beforeTest() {
+
+ System.out.println("beforeTest");
+
+ }
+
+ @AfterTest
+
+ public void afterTest() {
+
+ System.out.println("afterTest");
+
+ }
+
+ @BeforeSuite
+
+ public void beforeSuite() {
+
+ System.out.println("beforeSuite");
+
+ }
+
+ @AfterSuite
+
+ public void afterSuite() {
+
+ System.out.println("afterSuite");
+
+ }
+
+}
+
+Q. Demonstrate using TestNG framework data provider annotation using Selenium webdriver.
+
+DataPDemo.java
+
+package testing;
+
+import org.testng.annotations.Test;
+
+import org.testng.annotations.DataProvider;
+
+public class DataProviderDemo
+
+{
+
+ @Test(dataProvider = "dp")
+
+ public void f(Integer n, String s)
+
+ {
+
+ System.out.println(n+ " , "+s);
+
+ }
+
+ @DataProvider
+
+ public Object[][] dp()
+
+ {
+
+ return new Object[][]
+
+ {
+
+ new Object[] { 1, "a" },
+
+ new Object[] { 2, "b" },
+
+ };
+
+ }
+
+}
+
+Q. Demonstrate using TestNG framework data provider
+
+annotation for login process of https://opensourcedemo.orangehrmlive.com/ using Selenium web driver. Try login
+
+with valid and invalid credentials and check the test results.
+
+DemoLoginOHM.java
+
+package testing;
+
+import org.testng.annotations.Test;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import org.testng.annotations.AfterSuite;
+
+import org.testng.annotations.BeforeClass;
+
+import org.testng.annotations.BeforeSuite;
+
+import org.testng.annotations.DataProvider;
+
+public class DemoLoginOHM {
+
+WebDriver wd;
+
+ @Test(dataProvider = "dp")
+
+ public void f(String un, String pwd) throws Exception {
+
+wd.findElement(By.name("username")).sendKeys(un);
+
+wd.findElement(By.name("password")).sendKeys(pwd);
+
+wd.findElement(By.cssSelector("button[type=submit]")). click();
+
+Thread.sleep(1000);
+
+wd.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[1]/header/div[1]/div[2]/ul/li/span")).cli
+
+ck();
+
+wd.findElement(By.linkText("Logout")).click();
+
+ }
+
+ @BeforeSuite
+
+ public void openBrowser() {
+
+ System.setProperty("webdriver.chrome.driver", "C:\\Selenium\\chromedriver.exe");
+
+ wd = new FirefoxDriver();
+
+ }
+
+ @BeforeClass
+
+ public void url()
+
+ {
+
+ wd.get("http://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+
+ wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+ }
+
+ @AfterSuite
+
+ public void closeBrowser() {
+
+ wd.quit();
+
+ }
+
+ @DataProvider
+
+ public Object[][] dp() {
+
+ return new Object[][] {
+
+ new Object[] { "Admin", "admin123" },
+
+ new Object[] { "adm", "admin123" },
+
+ };
+
+ }
+
+}
+
+Q. Demonstrate using TestNG framework test case skip feature using Selenium webdriver.
+
+SkipDemo.java
+
+package testNGprograms;
+
+import org.testng.SkipException;
+
+import org.testng.annotations.Test;
+
+public class SkipDemo {
+
+ @Test
+
+ public void Login1()
+
+ {
+
+ System.out.println("Login 1 check");
+
+ }
+
+ @Test
+
+ public void Login2()
+
+ {
+
+ System.out.println("Login 2 check");
+
+ throw new SkipException("Login 2 functionality not available");
+
+ }
+
+ @Test
+
+ public void Login3()
+
+ {
+
+ System.out.println("Login 3 check");
+
+ }
+
+}
+
+Q. Demonstrate using TestNG framework assert methods using Selenium webdriver.
+
+ DemoAssert.java
+
+package testing;
+
+import org.testng.Assert;
+
+import org.testng.annotations.Test;
+
+public class DemoAssert {
+
+ @Test
+
+ public void Login1() {
+
+ System.out.println("Assert check");
+
+ Assert.assertTrue(2<4);
+
+ Assert.assertTrue(2>4);
+
+ Assert.assertEquals("abc","abc");
+
+ Assert.assertEquals("abc","abcde");
+
+ }
+
+ @Test
+
+ public void Login2() {
+
+ System.out.println("Login 2 check");
+
+ }
+
+}
+
+Q. Demonstrate using TestNG framework assert method on
+
+https://opensource-demo.orangehrmlive.com welcome
+
+window after successful login using Selenium webdriver.
+
+Check if the window title is “OrangeHRM” or not.
+
+AssertDemoOHM.java
+
+package testing;
+
+import org.testng.annotations.Test;
+
+import org.testng.annotations.BeforeClass;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import org.testng.Assert;
+
+import org.testng.annotations.AfterClass;
+
+import org.testng.annotations.BeforeSuite;
+
+import org.testng.annotations.AfterSuite;
+
+public class AssertDemoOHM {
+
+ WebDriver wd;
+
+ @BeforeSuite
+
+ public void openBrowser() {
+
+ System.setProperty("webdriver.chrome.driver", "C:\\Selenium\\chromedriver.exe");
+
+ wd = new FirefoxDriver();
+
+ }
+
+ @BeforeClass
+
+ public void loginURl() throws Exception {
+
+ wd.get("http://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+
+wd.manage().window().maximize();
+
+ wd.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
+
+ wd.findElement(By.name("username")).sendKeys("Admin");
+
+ wd.findElement(By.name("password")).sendKeys("admin123");
+
+ wd.findElement(By.cssSelector("button[type=submit")).click();
+
+ Thread.sleep(1000);
+
+ }
+
+ @Test
+
+ public void orangeHRM() {
+
+ String title = wd.getTitle();
+
+ System.out.println("Webdriver:" + title);
+
+ String exp_title = "OrangeHRM";
+
+ Assert.assertEquals(title, exp_title);
+
+ }
+
+ @AfterClass
+
+ public void logOut() {
+
+wd.findElement(By.xpath("/html/body/div/div[1]/div[1]/header/div[1]/div[2]/ul/li/span")).click();
+
+ wd.findElement(By.linkText("Logout")).click();
+
+ }
+
+ @AfterSuite
+
+ public void closeDriver() {
+
+ wd.close();
+
+ }
+
+}
+
+Q. Demonstrate using TestNG framework test case priority using Selenium webdriver.
+
+PriorityDemo.java
+
+package testing;
+
+import org.testng.annotations.Test;
+
+import org.testng.annotations.BeforeTest;
+
+import org.testng.annotations.AfterTest;
+
+public class PriorityDemo {
+
+ @Test(priority=2)
+
+ public void test1() {
+
+ System.out.println("Inside test1");
+
+ }
+
+ @Test(priority=3)
+
+ public void test2() {
+
+ System.out.println("Inside test2");
+
+ }
+
+ @Test(priority=1)
+
+ public void test3() {
+
+ System.out.println("Inside test3");
+
+ }
+
+}
+
+Q. Demonstrate using TestNG framework the mentioned
+
+navigation on https://opensource-demo.orangehrmlive.com/
+
+welcome window after successful login using Selenium
+
+webdriver. Once user successfully login the dashboard is
+
+displayed. Perform automation on login, display PIM menu
+
+details, after a delay display Myinfo menu details, and
+
+successful logout from web app.
+
+New_Test.java
+
+package TestNG;
+
+import org.testng.annotations.Test;
+
+import org.testng.annotations.BeforeClass;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import org.testng.annotations.AfterClass;
+
+import org.testng.annotations.BeforeSuite;
+
+import org.testng.annotations.AfterSuite;
+
+public class New_Test {
+
+ WebDriver wd;
+
+ @Test(priority = 1)
+
+ public void clickPin() {
+
+ wd.findElement(By.linkText("PIM")).click();
+
+ System.out.println("PIN SELECTED - priority 1");
+
+ }
+
+ @Test(priority = 2)
+
+ public void clickTime() {
+
+wd.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[1]/aside/nav/div[2]/ul/li[4]/a/span")).click();
+
+ System.out.println("Time clicked - priority 2");
+
+ }
+
+ @Test(priority = 3)
+
+ public void clickMyInfo() {
+
+ wd.findElement(By.linkText("My Info")).click();
+
+ System.out.println("My Info clicked - priority 3");
+
+ }
+
+ @BeforeClass
+
+ public void beforeClass() {
+
+ wd.findElement(By.name("username")).sendKeys("Admin");
+
+ wd.findElement(By.name("password")).sendKeys("admin123");
+
+ wd.findElement(By.cssSelector("button[type=submit]")).click();
+
+ }
+
+ @AfterClass
+
+ public void afterClass() {
+
+wd.findElement(By.xpath("/html/body/div/div[1]/div[1]/header/div[1]/div[2]/ul/li/span/p")).click();
+
+ wd.findElement(By.linkText("Logout")).click();
+
+ }
+
+ @BeforeSuite
+
+ public void wdLoad() {
+
+System.setProperty("webdriver.gecko.driver", "C:\\Selenium\\geckodriver.exe");
+
+wd = new FirefoxDriver();
+
+wd.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+
+wd.manage().window().maximize();
+
+wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+ }
+
+ @AfterSuite
+
+ public void afterSuite() {
+
+ wd.close();
+
+ }
+
+}
+
+Q. Demonstrate regression testing using TestNG framework.
+
+Use at least two classes e.g., ClassADemo and ClassBDemo
+
+to demonstrate regression testing by adding few test cases in
+
+existing test suite.
+
+ActionDemo.java
+
+Package Testing
+
+import org.testng.annotations.Test;
+
+public class ClassADemo
+
+{
+
+@Test
+
+public void test1()
+
+{
+
+System.out.println("Test I executed");
+
+}
+
+@Test
+
+public void test2()
+
+{
+
+System.out.println("Test 2 executed");
+
+}
+
+@Test
+
+public void test3()
+
+{
+
+System.out.println("Test 3 executed");
+
+}
+
+}
+
+Create new class
+
+package Testing;
+
+import org.testng.annotations.Test;
+
+public class ClassBDemo
+
+{
+
+@Test
+
+public void f1()
+
+{
+
+System.out.println("fl executed");
+
+}
+
+@Test
+
+public void f2()
+
+{
+
+System.out.println("f2 executed");
+
+}
+
+@Test
+
+public void f3()
+
+{
+
+System.out.println("f3 executed");
+
+}
+
+}
+
+testing.xml
+
+<?xml version="1.0" encoding-"UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Suite">
+
+<test thread-count="5" name="regression">
+
+<classes>
+
+<class name="Testing.ClassBDemo"/>
+
+<class name="Testing.ClassADemo"/>
+
+</classes>
+
+</test> <!-- regression -->
+
+</suite> <!-- Suite -->
+
+
+
+Q. BMI Calculator:
+
+
+
+Boundary Value Analysis (BVA):
+
+Weight:
+
+Test Case 1: Weight = 2 kg (below the lower limit)
+
+Test Case 2: Weight = 3 kg (at the lower limit)
+
+Test Case 3: Weight = 150 kg (within the range)
+
+Test Case 4: Weight = 300 kg (at the upper limit)
+
+Test Case 5: Weight = 301 kg (above the upper limit)
+
+Height:
+
+Test Case 6: Height = 0.2 meters (below the lower limit)
+
+Test Case 7: Height = 0.3 meters (at the lower limit)
+
+Test Case 8: Height = 1.5 meters (within the range)
+
+Test Case 9: Height = 2.4 meters (at the upper limit)
+
+Test Case 10: Height = 2.5 meters (above the upper limit)
+
+Equivalence Class Partitioning (ECP):
+
+Weight:
+
+Test Case 11: Weight = 75 kg (normal/valid weight)
+
+Test Case 12: Weight = -5 kg (invalid/negative weight)
+
+Test Case 13: Weight = 400 kg (invalid/above limit)
+
+Height:
+
+Test Case 14: Height = 1.8 meters (normal/valid height)
+
+Test Case 15: Height = 0.1 meters (invalid/below limit)
+
+Test Case 16: Height = 3.0 meters (invalid/above limit)
+
+ii. Triangle Problem:
+
+Boundary Value Analysis (BVA):
+
+Test Case 1: a = 0, b = 1, c = 2 (invalid triangle - one side is zero)
+
+Test Case 2: a = 1, b = 2, c = 3 (scalene triangle, smallest valid triangle)
+
+Test Case 3: a = 199, b = 200, c = 201 (scalene triangle, within the range)
+
+Test Case 4: a = 998, b = 999, c = 1000 (scalene triangle, largest valid triangle)
+
+Test Case 5: a = 1001, b = 1002, c = 1003 (invalid triangle - one side exceeds the upper limit)
+
+Equivalence Class Partitioning (ECP):
+
+Test Case 6: a = 5, b = 5, c = 5 (equilateral triangle)
+
+Test Case 7: a = 5, b = 5, c = 8 (isosceles triangle)
+
+Test Case 8: a = 7, b = 9, c = 7 (isosceles triangle)
+
+Test Case 9: a = 3, b = 4, c = 5 (scalene triangle)
+
+Test Case 10: a = -1, b = 2, c = 3 (invalid/negative side)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------
+
+Q. Demonstrate handling multiple frames in selenium
+
+Code:
+
+package TestCases;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver; public class Multi_Frames
+
+{
+
+public static void main(String[] args)
+
+{
+
+System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver(); driver.get("http://demo.guru99.com/test/guru99home/");
+
+// navigates to the page consisting an iframe
+
+driver.manage().window().maximize(); driver.switchTo().frame("a077aa5e");
+
+System.out.println("We are switch to the iframe"); driver.findElement(By.xpath("html/body/a/img")).click();
+
+//Clicks the iframe System.out.println("*We are done*");
+
+}
+
+}
+
+Q. Demonstrate handling multiple frames in selenium.
+
+SeleniumDemo .java
+
+import org.openqa.selenium.*;
+
+import org.openqa.selenium.chrome.*;
+
+public class SeleniumDemo {
+
+ public static void main(String[] args) throws Exception {
+
+ System.setProperty("webdriver.chrome.driver", "C:\\\\chromedriver.exe");
+
+ WebDriver driver = new ChromeDriver();
+
+ driver.get("https://demo.guru99.com/test/guru99home/");
+
+ driver.manage().window().maximize();
+
+ String title = driver.getTitle();
+
+ System.out.println(title);
+
+ driver.switchTo().frame("a077aa5e");
+
+ driver.findElement(By.xpath("/html/body/a/img")).click();
+
+ }
+
+}
+
+Q.	Implement Browser command and navigation Commands. Code:
+
+package TestCases;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver; public class Navigation {
+
+public static void main(String[] args) { System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver();
+
+//driver.get("https://www.google.com"); driver.navigate().to("https://www.google.com"); driver.findElement(By.linkText("Images")).click(); try {
+
+Thread.sleep(2000);
+
+} catch (InterruptedException e) {
+
+// TODO Auto-generated catch block e.printStackTrace();
+
+}
+
+driver.navigate().back(); try { Thread.sleep(1000);
+
+} catch (InterruptedException e) {
+
+// TODO Auto-generated catch block e.printStackTrace();
+
+}
+
+System.out.println("back done	"); driver.navigate().forward();
+
+try { Thread.sleep(1000);
+
+} catch (InterruptedException e) {
+
+// TODO Auto-generated catch block e.printStackTrace();
+
+}
+
+System.out.println("Forward done.	"); driver.navigate().refresh();
+
+try { Thread.sleep(1000);
+
+} catch (InterruptedException e) {
+
+// TODO Auto-generated catch block e.printStackTrace();
+
+}
+
+System.out.println("refresh done. ");
+
+}
+
+Q.	Implement the find element command
+
+Code:
+
+package TestCases;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver; import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.chrome.ChromeDriver; public class Find_Element {
+
+public static void main(String[] args) { System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver();
+
+//driver.get("https://www.google.com"); driver.navigate().to("https://www.facebook.com/"); WebElement el = driver.findElement(By.id("email")); el.sendKeys("hanchatesameer@gmail.com"); WebElement el2 = driver.findElement(By.id("pass")); el2.sendKeys("123456");
+
+WebElement el3 = driver.findElement(By.name("login")); el3.click(); System.out.println("Login button clicked");
+
+}
+
+}
+
+Q. Forgotten password? Link button testing By Find Element: Code: package TestCases;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver; import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.chrome.ChromeDriver; import org.openqa.selenium.firefox.FirefoxDriver; public class FindElemnt2 {
+
+public static void main(String[] args) { System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new FirefoxDriver();
+
+//driver.get("https://www.google.com"); driver.navigate().to("https://www.facebook.com/");
+
+WebElement el = driver.findElement(By.linkText("Forgotten password?")); el.click();
+
+System.out.println("Forgoten password? Clicked");
+
+}
+
+}
+
+Q. To Get the URL and Title:
+
+Code:
+
+package TestCases;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver; public class URL_Title {
+
+public static void main(String[] args) { System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver();
+
+//driver.get("https://www.google.com"); driver.navigate().to("https://www.facebook.com/"); System.out.println(driver.getTitle()); System.out.println(driver.getCurrentUrl());
+
+}
+
+}
+
+Q. To Test Attributes and Tag name:
+
+Code:
+
+package TestCases;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver; import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.chrome.ChromeDriver; public class Tag_Name {
+
+public static void main(String[] args) { System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver();
+
+//driver.get("https://www.google.com"); driver.navigate().to("https://www.facebook.com/"); String title = driver.getTitle(); System.out.println("Title is : "+title);
+
+WebElement el = driver.findElement(By.id("email")); System.out.println(el.getAttribute("class")); System.out.println(el.getTagName());
+
+}
+
+}
+
+Q.	Demonstrate the Locator (id, CSS selector, path)
+
+XPath Locator:
+
+Code:
+
+package TestCases;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver; import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.chrome.ChromeDriver; public class Locators {
+
+public static void main(String[] args) {
+
+System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver(); driver.get("https://www.facebook.com/");
+
+WebElement img = driver.findElement(By.xpath("//*[@id=\"email\"]")); System.out.println(img.isDisplayed()); System.out.println(img.isEnabled()); System.out.println(img.isSelected());
+
+}
+
+}
+
+System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver(); driver.get("https://www.facebook.com/");
+
+WebElement img = driver.findElement(By.xpath("//*[@id=\"email\"]")); System.out.println(img.isDisplayed()); System.out.println(img.isEnabled()); System.out.println(img.isSelected());
+
+}
+
+}
+
+Q. ID Locator:
+
+Code:
+
+package TestCases;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver; import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Locators {
+
+public static void main(String[] args) { System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver(); driver.get("https://www.facebook.com/");
+
+String title = driver.getTitle(); System.out.println("Title is: " + title); System.out.println("driver"+driver.getCurrentUrl());
+
+WebElement unm= driver.findElement(By.id("email")); System.out.println(unm.getAttribute("id"));
+
+System.out.println(unm.getTagName());	//Html tag name is ID
+
+}
+
+}
+
+Q. Locator By Using CSS Selector:
+
+Code:
+
+package TestCases;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver; import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Locators {
+
+public static void main(String[] args) { System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver(); driver.get("https://www.facebook.com/");
+
+WebElement el = driver.findElement(By.cssSelector("input[name='email']")); System.out.println(el.getTagName());
+
+}
+
+}
+
+Q. Demonstrate different types of alerts
+
+Code:
+
+package TestCases;
+
+import org.openqa.selenium.Alert; import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver; import org.openqa.selenium.firefox.FirefoxDriver; public class Alerts {
+
+public static void main(String[] args) { System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new FirefoxDriver();
+
+//driver.get("https://www.google.com"); driver.navigate().to("https://demo.guru99.com/test/delete_customer.p hp"); driver.findElement(By.name("cusid")).sendKeys("35"); driver.findElement(By.name("submit")).click();
+
+Alert alt = driver.switchTo().alert();
+
+String alert_msg = driver.switchTo().alert().getText(); System.out.println(alert_msg);
+
+try { Thread.sleep(500);
+
+} catch (InterruptedException e) {
+
+// TODO Auto-generated catch block e.printStackTrace();
+
+}
+
+alt.accept();
+
+System.out.println("Alert Box done");
+
+}
+
+}
+
+Q. Demonstrate:
+
+Handling Drop Down
+
+Code:
+
+package TestCases;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver; import org.openqa.selenium.support.ui.Select; public class Drop_Down {
+
+public static void main(String[] args) { System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver();
+
+//driver.get("https://www.google.com"); driver.navigate().to("https://www.facebook.com/r.php?r=101"); Select month= new Select(driver.findElement(By.id("month")));
+
+//month.deselectByVisibleText("Oct"); month.selectByIndex(2);
+
+}
+
+}
+
+Q. List Boxes Code:
+
+package TestCases; import java.util.List;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver; import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.chrome.ChromeDriver; import org.openqa.selenium.support.ui.Select;
+
+public class Drop_Down {
+
+public static void main(String[] args) { System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver();
+
+//driver.get("https://www.google.com"); driver.navigate().to("https://www.facebook.com/r.php?r=101"); Select month= new Select(driver.findElement(By.id("month"))); List
+
+<WebElement> gender = driver.findElements(By.name("sex")); int cnt = gender.size();
+
+System.out.println(cnt);
+
+for(int i=0;i<=cnt-1;i++)
+
+{
+
+String text = gender.get(i).getText(); System.out.println(text); gender.get(i).click();
+
+try { Thread.sleep(200);
+
+} catch (InterruptedException e) {
+
+// TODO Auto-generated catch block e.printStackTrace();
+
+}
+
+}
+
+}
+
+}
+
+Q. Command Button
+
+Get Title:
+
+package TestCase;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver; public class Command_Button {
+
+public static void main(String[] args) { System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver(); driver.get("https://www.google.com/"); String title = driver.getTitle(); System.out.println("Title is: "+title); System.out.println(driver.getTitle());
+
+}
+
+Q. Radio buttons & text boxes
+
+First, we Create the html file:
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="viewport" content="width=device-width, initial- scale=1.0">
+
+<title>Document</title>
+
+</head>
+
+<body>
+
+<h1>Html page</h1>
+
+<input type="radio" name="course" value="MCA">MCA</br></br>
+
+<input type="radio" name="course" value="MMS">MMS</br></br>
+
+<input type="radio" name="course" value="BCA">BCA</br></br>
+
+</body>
+
+</html>
+
+Code:
+
+package TestCases;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver; public class Radio_Button {
+
+public static void main(String[] args) { System.setProperty("Webdriver.chrome.driver","C:\\Users\\rushi\\On eDrive\\Desktop\\C21134_STQA
+
+\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver();
+
+//driver.get("https://www.google.com"); driver.navigate().to("file:///C:/Html/test.html"); driver.findElement(By.xpath("/html/body/input[3]")).click(); System.out.println("Sucessfully completed");
+
+}
+
+}
+
+Q. Running TestNG Annotations:
+
+TestNG1.java:
+
+package TestNGFrameworkDemo; import org.openqa.selenium.By; import org.openqa.selenium.Keys;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver; import org.testng.annotations.Test;
+
+public class TestNG1 {
+
+public String baseUrl = "https://www.google.com/";
+
+String driverPath = "E:\\C21134 Hrushikesh\\chromedriver\\chromedriver.exe";
+
+public WebDriver driver; @Test
+
+public void f() throws InterruptedException { System.out.println("Launching chrome browser"); System.setProperty("Webdriver.chrome.driver", driverPath); driver = new ChromeDriver();
+
+driver.get(baseUrl);
+
+driver.findElement(By.name("q")).sendKeys("DES NMITD", Keys.ENTER); Thread.sleep(2000);
+
+}
+
+}
+
+TestNG2.java:
+
+package TestNGFrameworkDemo; import org.openqa.selenium.By; import org.openqa.selenium.Keys;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver; import org.testng.annotations.Test;
+
+public class TestNG2 { @Test
+
+public void TestGoogle() throws InterruptedException { System.setProperty("webdriver.chrome.driver", "E:\\C21134
+
+Hrushikesh\\chromedriver\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver(); driver.get("https://www.google.co.in/"); driver.findElement(By.name("q")).sendKeys("DES's NMITD",Keys.ENTER); Thread.sleep(2000);
+
+}
+
+TestNG3.java:
+
+package TestNGFrameworkDemo;
+
+import org.testng.annotations.Test;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver; import org.testng.annotations.BeforeTest;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver; import org.testng.Assert;
+
+import org.testng.annotations.AfterTest; public class TestNG3 {
+
+String actualTitle,expectedTitle; @BeforeTest public void launchBrowser() {
+
+System.out.println("launching Google chrome browser"); System.setProperty("webdriver.chrome.driver", "E:\\C21134
+
+Hrushikesh\\chromedriver\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver(); driver.get("https://demo.guru99.com/test/newtours/");
+
+}
+
+@Test
+
+public void verifyHomepageTitle() {
+
+@Test
+
+public void TestFacebook() throws InterruptedException { System.setProperty("webdriver.chrome.driver", "E:\\C21134
+
+Hrushikesh\\chromedriver\\chromedriver.exe");
+
+WebDriver driver = new ChromeDriver(); driver.get("https://www.facebook.com/"); driver.findElement(By.name("email")).sendKeys("DES's NMITD",Keys.ENTER); Thread.sleep(2000);
+
+}
+
+}
+
+String expectedTitle = "Welcome: Mercury Tours"; String ActualTitle
+
+= driver.getTitle(); Assert.assertEquals(actualTitle, expectedTitle);
+
+}
+
+@AfterTest
+
+public void terminateBrowser() { driver.close();
+
+}
+
+}
+
+14.	Demonstrate Validation testing
+
+Code:
+
+package TestCases;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver; public class Validations_Test {
+
+public static void main(String []args)
+
+{
+
+System.setProperty("Webdriver.chrome.driver","C:\\STQA\\Drivers\\ chromedriver.exe"); WebDriver driver = new ChromeDriver();
+
+driver.get("https://www.google.com/");
+
+String title =driver.getTitle(); // Check the validation of title System.out.println("title is" +title); System.out.println(driver.getCurrentUrl()); //Check the validation of URL
+
+// # Check the validation of the Search box is Visible are not. boolean status =
+
+driver.findElement(By.xpath("/html/body/div[1]/div[3]/form/div[1]/di v[1]/div[1]")).isDisplayed();
+
+if(status){
+
+System.out.println("Search box is visible");
+
+} else {
+
+}
+
+}
+
+}
+
